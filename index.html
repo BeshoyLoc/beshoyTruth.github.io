@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge's Price</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+            animation: fadeIn 3s ease-in-out;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(90deg, #ff0000, #fff, #0000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitch 2s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        button {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        input {
+            width: 80%;
+            max-width: 400px;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            font-size: 1rem;
+            border: 2px solid #fff;
+            background: #000;
+            color: #fff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0f0;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #0000ff; }
+            50% { text-shadow: -2px -2px 0 #ff0000, 2px 2px 0 #0000ff; }
+            100% { text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #0000ff; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .philosophical-message {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 2px solid #0f0;
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            font-size: 1.5rem;
+            text-align: justify;
+            line-height: 2;
+            font-style: italic;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .footer span {
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+
+            .philosophical-message {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 0.8rem;
+            }
+
+            .philosophical-message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Knowledge Demands a Price</h1>
+        <p>Are you ready to pay it?</p>
+        <button onclick="revealTruth()">Reveal the Truth</button>
+    </div>
+
+    <div class="footer">
+        Developed by <span>Beshoy Gamal</span>
+    </div>
+
+    <script>
+        const uniqueCode = localStorage.getItem('uniqueCode');
+        const hasSolved = uniqueCode !== null;
+
+        async function notifyEntry() {
+            const webhookURL = 'https://discord.com/api/webhooks/1331626346044067973/zzF57gN9_TYGbW2jWH0IJUNqGmWNwqyyArDKMQPBqWWIC8wRmD28B8YjZx9dPnaY1Wnp';
+            const payload = { content: `A visitor has entered the site.` };
+
+            try {
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+            } catch (error) {
+                console.error('Failed to notify Discord of entry:', error);
+            }
+        }
+
+        notifyEntry();
+
+        function revealTruth() {
+            const container = document.querySelector('.container');
+
+            if (hasSolved) {
+                container.innerHTML = `
+                    <h1>You Have Already Been Chosen</h1>
+                    <div class="philosophical-message">
+                        "The path to truth is tread but once. Your unique code remains: <span style='color: #0f0;'>${uniqueCode}</span>."
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <h1>The Truth is Here...</h1>
+                <p style="font-size: 1.5rem;">But at what cost?</p>
+                <p>Solve this to uncover the truth:</p>
+                <p style="color: #0ff; font-size: 1.2rem;">If you have me, you want to share me. If you share me, you no longer have me. What am I?</p>
+                <input type="text" id="answer" placeholder="Your answer">
+                <button onclick="checkAnswer()">Submit</button>
+                <div id="response" style="margin-top: 1rem; font-size: 1rem; color: #f00;"></div>
+            `;
+        }
+        function repoE(text, key) {
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+            let encryptedText = '';
+            for (let i = 0, j = 0; i < text.length; i++) {
+                const letter = text[i];
+                if (alphabet.includes(letter)) {
+                    const letterIndex = alphabet.indexOf(letter);
+                    const keyIndex = alphabet.indexOf(key[j % key.length]);
+                    const encryptedLetter = alphabet[(letterIndex + keyIndex) % alphabet.length];
+                    encryptedText += encryptedLetter;
+                    j++;
+                } else {
+                    encryptedText += letter;
+                }
+            }
+            return encryptedText;
+        }
+        async function checkAnswer() {
+            const answer = document.getElementById('answer').value.toLowerCase();
+            const response = document.getElementById('response');
+            const Truthes = ['vbkdhq', 'd pmoubb', 'vbkdhqa'];
+            if (Truthes.includes(repoE(answer,"dxim"))) {
+                const code = generateCode();
+                localStorage.setItem('uniqueCode', code);
+                await sendToDiscord(code);
+
+                document.querySelector('.container').innerHTML = `
+                    <h1>Congratulations</h1>
+                    <div class="philosophical-message">
+                        "Now you know part of the truth, which is <span style='color: #0f0;'>DXIM</span>, and you must pay the price for your knowledge, You are among the chosen few who dared to question and prevailed. The burden of truth is yours alone."  
+                        Your unique code is: <span style='color: #0f0;'>${code}</span>
+                        Wait for us, we will contact you soon
+                    </div>
+                    
+                `;
+            } else {
+                await sendToDiscordf(answer)
+                response.textContent = 'Incorrect answer. Keep trying! The truth is worth it.';
+            }
+        }
+
+        function generateCode() {
+            return 'DX-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+
+        async function sendToDiscord(code) {
+            const webhookURL = 'https://discord.com/api/webhooks/1331626346044067973/zzF57gN9_TYGbW2jWH0IJUNqGmWNwqyyArDKMQPBqWWIC8wRmD28B8YjZx9dPnaY1Wnp';
+            const payload = {
+                content: `A new player has passed Level 1! 🎉 Unique Code: ${code}`
+            };
+
+            try {
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+            } catch (error) {
+                console.error('Failed to send message to Discord:', error);
+            }
+        }
+        async function sendToDiscordf(answer) {
+            const webhookURL = 'https://discord.com/api/webhooks/1331626346044067973/zzF57gN9_TYGbW2jWH0IJUNqGmWNwqyyArDKMQPBqWWIC8wRmD28B8YjZx9dPnaY1Wnp';
+            const payload = {
+                content: `Wrong Answer: ${answer}`
+            };
+
+            try {
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+            } catch (error) {
+                console.error('Failed to send message to Discord:', error);
+            }
+        }
+    </script>
+</body>
+</html>
